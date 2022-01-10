@@ -5,4 +5,4 @@ In this project I will anonymize documents from criminal and civil judgments ava
 My idea is to use relation extraction to find entities and their roles
 
 
-<img src="https://github.com/Gianpe/NLP_Anonymization/blob/main/images/def_extractor.gif" width="800" height="400"/>
+<img src="https://github.com/Gianpe/NLP_Anonymization/blob/main/images/def_extractor.gif" width="800" height="600"/>
