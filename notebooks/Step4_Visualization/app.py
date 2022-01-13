@@ -15,6 +15,7 @@ import random
 from pathlib import Path
 import spacy
 from spacy.tokens import DocBin, Doc
+
 #from spacy.training.example import Example
 from rel_pipe import make_relation_extractor, score_relations
 from rel_model import create_relation_model, create_classification_layer, create_instances, create_tensors
@@ -22,7 +23,7 @@ import re
 import requests
 import PyPDF2
 
-nlp2 = spacy.load("model-best")
+nlp2 = spacy.load("/content/drive/MyDrive/TA_project/progetto_TA/spacytransformers/model-best")
 
 import spacy.cli
 
@@ -93,11 +94,11 @@ def get_imputati(pdf_link, top_k=3):
                 for b in s.ents:
                     if e.start == value[0] and b.start == value[1]:
                         if rel_dict['DIFENDE'] > rel_dict['GIUDICA']:
-                            imputati.append((b.text[0]+'*****'+b.text[-1], rel_dict['DIFENDE']))   
+                            imputati.append((b.text[0]+'*****'+b.text[-1], rel_dict['DIFENDE'],b.text))   
                         
                         
                         else:
-                            imputati.append((b.text[0]+'*****'+b.text[-1],  rel_dict['GIUDICA']))
+                            imputati.append((b.text[0]+'*****'+b.text[-1],  rel_dict['GIUDICA'],b.text))
 
     imputati.sort(key= lambda x: x[1],reverse=True)
     imp_name = set()
@@ -110,7 +111,7 @@ def get_imputati(pdf_link, top_k=3):
     if top_k > len(new_imputati):
         top_k = len(new_imputati)
         
-    return pd.DataFrame(new_imputati[:top_k], columns =['defendants','probs'])
+    return pd.DataFrame(new_imputati[:top_k], columns =['defendants','probs', 'completename'])
 
 
 
@@ -136,39 +137,76 @@ JupyterDash.infer_jupyter_proxy_config()
 # Bootstrap themes by Ann: https://hellodash.pythonanywhere.com/theme_explorer
 app = JupyterDash()
 
-app.layout = dbc.Container([
-    dbc.Row([
-        dbc.Col([
-            dbc.Card([
-                dbc.CardBody([
-                	dbc.Input(id="input_link", placeholder="inserisci il link", type="text"),
-			html.Br(),
-			html.P(id="output1"),
-        		]
-        		
-        		)
-            ]),
-        ], width=6),
-        dbc.Col([
-            dbc.Card([
-                dbc.CardBody([
-                	dbc.Input(id="input_num", placeholder="inserisci il numero di imputati", type="text"),
-			html.Br(),
-			html.P(id="output2"),
-        		]
-        		)
-            ]),
-        ], width=6),
-        dbc.Col([
-            dbc.Card([
-                dbc.CardBody([
-                    dcc.Graph(id='bar-chart', figure={}, config={'displayModeBar': False}),
-                ])
-            ]),
-        ], width=4),
-    ],className='mb-2'),
-   
-], fluid=True)
+
+# Define Layout
+app.layout = dbc.Container(
+    fluid=True,
+    children=[
+        html.H1("Extracts the probable defendants with a relation extraction model"),
+        html.Hr(),
+        dbc.Row(
+            [
+                dbc.Col(
+                    width=5,
+                    children=[
+                        dbc.Col([
+                            dbc.Card([
+                                dbc.CardBody([
+                                	dbc.Input(id="input_link", placeholder="inserisci il link", type="text"),
+                			html.Br(),
+                			html.P(id="output1"),
+                        		]
+                        		
+                        		)   
+                            ]),
+                        ], width=6),
+                        dbc.Col([
+                            dbc.Card([
+                                dbc.CardBody([
+                                	dbc.Input(id="input_num", placeholder="inserisci il numero di imputati", type="text"),
+                			html.Br(),
+                			html.P(id="output2"),
+                        		]
+                        		)
+                            ]),
+                        ], width=6),
+                        dbc.Col([
+                            dbc.Card([
+                                dbc.CardBody([
+                                    dcc.Graph(id='bar-chart', figure={}, config={'displayModeBar': False}),
+                                ])
+                            ]),
+                        ], width=4),
+                        dbc.Card(
+                            body=True,
+                            children=[
+                                        dbc.Label("Summarized Content"),
+                                        dcc.Textarea(
+                                            id="anonymized",
+                                            style={
+                                                "width": "100%",
+                                                "height": "calc(75vh - 275px)",
+                                            },
+                                        ),
+                                    ]
+                                )
+                            
+                       
+                            
+                        
+                        
+                  
+                
+                        ],
+                ),
+                
+                
+
+    ],
+)
+]
+)
+
 
 
 
@@ -178,14 +216,15 @@ app.layout = dbc.Container([
 
 # Bar Chart ************************************************************
 @app.callback(
-    Output('bar-chart','figure'),
-    Input('input_link','value'),
-    Input('input_num','value'),
+    [Output('anonymized', 'value'), Output('bar-chart','figure')],
+    [
+        Input('input_num','value'),
+        Input('input_link','value'),
+    ],
     
 )
-def update_bar(link, k):
-    
-    
+def update_out(k, link):
+    # Bar Chart
     df = get_imputati(link,k)
     
     fig_bar = px.bar(df, x='probs', y='defendants', template='ggplot2',
@@ -193,8 +232,16 @@ def update_bar(link, k):
     fig_bar.update_yaxes(tickangle=45)
     fig_bar.update_layout(margin=dict(l=20, r=20, t=30, b=20))
     fig_bar.update_traces(marker_color='blue')
+    
+    # text output
+    text = pdf2str(link)
+    text = clean_jud(text)
+    imp = df.iloc[0]['completename']
+    
+    text = text[text.find(imp)-200: text.find(imp) + 200]
+    text = text.replace(imp, imp[0].upper() + '********' + imp[-1])
 
-    return fig_bar
+    return text, fig_bar
 
 
 
