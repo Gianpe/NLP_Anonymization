@@ -17,13 +17,15 @@ import spacy
 from spacy.tokens import DocBin, Doc
 
 #from spacy.training.example import Example
-from rel_pipe import make_relation_extractor, score_relations
+from rel_pipe import make_relation_extractor, score_relationsg
 from rel_model import create_relation_model, create_classification_layer, create_instances, create_tensors
 import re
 import requests
 import PyPDF2
+import fitz
+import re
 
-nlp2 = spacy.load("/content/drive/MyDrive/TA_project/progetto_TA/spacytransformers/model-best")
+nlp2 = spacy.load("/content/drive/MyDrive/TA_project/progetto_TA/NLP_Anonymization/spacytransformers_umberto/training/model-best")
 
 import spacy.cli
 
@@ -94,11 +96,11 @@ def get_imputati(pdf_link, top_k=3):
                 for b in s.ents:
                     if e.start == value[0] and b.start == value[1]:
                         if rel_dict['DIFENDE'] > rel_dict['GIUDICA']:
-                            imputati.append((b.text[0]+'*****'+b.text[-1], rel_dict['DIFENDE'],b.text))   
+                            imputati.append((b.text[0].upper()+'*****'+b.text[-1], rel_dict['DIFENDE'],b.text))   
                         
                         
                         else:
-                            imputati.append((b.text[0]+'*****'+b.text[-1],  rel_dict['GIUDICA'],b.text))
+                            imputati.append((b.text[0].upper() + '*****' + b.text[-1],  rel_dict['GIUDICA'],b.text))
 
     imputati.sort(key= lambda x: x[1],reverse=True)
     imp_name = set()
@@ -113,6 +115,62 @@ def get_imputati(pdf_link, top_k=3):
         
     return pd.DataFrame(new_imputati[:top_k], columns =['defendants','probs', 'completename'])
 
+class Redactor:
+    # constructor
+    def __init__(self, path, defendant):
+        self.path = path
+        self.defendant = defendant
+ 
+    def get_sensitive_data(self, lines):
+       
+        """ Function to get all the lines """
+         
+       
+        for line in lines:
+           for name in self.defendant.split():
+                # matching the regex to each line
+                if name in line:
+                    # yields creates a generator
+                    # generator is used to return
+                    # values in between function iterations
+                    yield self.defendant
+                elif name.upper() in line:
+                    yield self.defendant.upper()
+                elif name.capitalize() in line:
+                    yield self.defendant.capitalize()
+
+
+    def redaction(self):
+       
+        """ main redactor code """
+         
+        # opening the pdf
+        doc = fitz.open(self.path)
+         
+        # iterating through pages
+        for page in doc:
+           
+            # _wrapContents is needed for fixing
+            # alignment issues with rect boxes in some
+            # cases where there is alignment issue
+            #page._wrapContents()
+             
+            # getting the rect boxes which consists the matching email regex
+            sensitive = self.get_sensitive_data(page.get_text("text")
+                                                .split('\n'))
+            for data in sensitive:
+                areas = page.search_for(data)
+                 
+                # drawing outline over sensitive datas
+                [page.add_redact_annot(area, fill = (0, 0, 0)) for area in areas]
+                 
+            # applying the redaction
+            page.apply_redactions()
+             
+        # saving it to a new pdf
+        doc.save('/content/redacted.pdf')
+        
+ 
 
 
 
@@ -218,12 +276,12 @@ app.layout = dbc.Container(
 @app.callback(
     [Output('anonymized', 'value'), Output('bar-chart','figure')],
     [
-        Input('input_num','value'),
-        Input('input_link','value'),
+       Input('input_link','value'),
+    Input('input_num','value'),
     ],
     
 )
-def update_out(k, link):
+def update_out( link,k=3):
     # Bar Chart
     df = get_imputati(link,k)
     
@@ -238,8 +296,13 @@ def update_out(k, link):
     text = clean_jud(text)
     imp = df.iloc[0]['completename']
     
-    text = text[text.find(imp)-200: text.find(imp) + 200]
+    text = text[: text.find(imp) + 200]
     text = text.replace(imp, imp[0].upper() + '********' + imp[-1])
+    
+    
+    
+    redactor = Redactor('sentenza.pdf', imp)
+    redactor.redaction()
 
     return text, fig_bar
 
@@ -252,11 +315,3 @@ if __name__=='__main__':
 
                      
     
-    
-
-
-
-
-
-
-"""## Andamento mensile del sentimento """
