@@ -25,7 +25,7 @@ import PyPDF2
 import fitz
 import re
 
-nlp2 = spacy.load("spacytransformers_umberto/training/model-best")
+nlp2 = spacy.load("./spacytransformers_umberto/training/model-best")
 
 import spacy.cli
 
