@@ -25,7 +25,7 @@ import PyPDF2
 import fitz
 import re
 
-nlp2 = spacy.load("/content/drive/MyDrive/TA_project/progetto_TA/NLP_Anonymization/spacytransformers_umberto/training/model-best")
+nlp2 = spacy.load("/content/NLP_Anonymization/spacytransformers_umberto/training/model-best")
 
 import spacy.cli
 
