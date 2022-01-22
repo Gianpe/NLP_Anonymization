@@ -17,7 +17,7 @@ import spacy
 from spacy.tokens import DocBin, Doc
 
 #from spacy.training.example import Example
-from rel_pipe import make_relation_extractor, score_relationsg
+from rel_pipe import make_relation_extractor, score_relations
 from rel_model import create_relation_model, create_classification_layer, create_instances, create_tensors
 import re
 import requests
