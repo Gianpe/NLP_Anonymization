@@ -1,0 +1,15 @@
+spacy==3.2.1
+spacy-nightly==3.0.0rc5
+en-core-web-trf @ https://github.com/explosion/spacy-models/releases/download/en_core_web_trf-3.0.0/en_core_web_trf-3.0.0.tar.gz
+transformers==4.9.2
+spacy-transformers==1.0.4
+PyPDF2==1.26.0
+PyMuPDF==1.19.4
+dash==2.0.0
+dash-bootstrap-components==1.0.2
+dash-core-components==2.0.0
+dash-extensions==0.0.67
+dash-html-components==2.0.0
+dash-table==5.0.0
+jupyter-dash==0.4.0
+pyngrok==5.1.0
