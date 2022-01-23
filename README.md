@@ -13,8 +13,33 @@ In the gif below the dashboard is shown and later on how to use it on colab is e
 
 <img src="https://github.com/Gianpe/NLP_Anonymization/blob/main/images/def_extractor2.gif" width="600" height="338"/>
 
-## Install pipeline
+### Install pipeline
 ```bash
 pip install https://github.com/Gianpe/NLP_Anonymization/raw/main/spacytransformers_umberto/package_tar_format/en_relation_def_extraction-0.0.1/dist/en_relation_def_extraction-0.0.1.tar.gz
 
+```
+### Usage on Colab
+
+```bash
+
+
+!git clone https://github.com/Gianpe/NLP_Anonymization.git
+%cd /content/NLP_Anonymization/notebooks/Step4_Visualization/
+
+!pip install -U spacy-nightly --pre
+!pip install -r requirements.txt
+
+!pip install https://github.com/Gianpe/NLP_Anonymization/raw/main/spacytransformers_umberto/package_tar_format/en_relation_def_extraction-0.0.1/dist/en_relation_def_extraction-0.0.1.tar.gz
+
+#This step is necessary because the config file of a library we import is not updated and it brings to error. 
+!grep -rl "defaults = yaml.load(f)" /usr/local/lib/python3.7/dist-packages/distributed/config.py | xargs sed -i 's/defaults = yaml.load(f)/defaults = yaml.load(f, Loader=yaml.FullLoader)/g'
+
+!ngrok authtoken 23V4xyZKlY7Ql88g1RHrO5GGLOS_38SQ8R5uG6v5JUzDrkzBT
+
+from pyngrok import ngrok
+
+#To run dash in colab it is necessary to create a tunnel. The first link will be the one to use to see the dashboards
+ngrok.connect(8050)
+
+!python3 app.py
 ```
