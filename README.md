@@ -6,7 +6,7 @@ NER models are often used to anonymize documents. These models are trained to ex
 In this work an alternative method for anonymization is proposed which is based on the extraction of relationships within a text, in this case on criminal sentences.
 From this spaCy project https://github.com/explosion/projects/tree/v3/tutorials/rel_component I built a pipeline and trained it to extract the relationships between judge and accused and between lawyer and accused, with the aim of identifying the accused entity and anonymizing it, because I think the relationship can help distinguish the entity I'm interested in (accused) from those I don't intend to anonymize (judge, lawyer). I used state of the art NLP via the spacy-transformers library.  More info in the report.pdf
 
-I have created an interactive dashboard where you can enter any sentences by taking the link of the pdf from the following site http://www.italgiure.giustizia.it/sncass/ and you are shown a bar chart with top-k most likely defendants and a piece of the judgement with its anonymization. In addition, a copy of the pdf is downloaded in which the most eligible accused is obscured.
+I have created an interactive dashboard where you can enter any judgements by taking the link of the pdf from the following site http://www.italgiure.giustizia.it/sncass/ and you are shown a bar chart with top-k most likely defendants and a piece of the judgement with its anonymization. In addition, a copy of the pdf is downloaded in which the most eligible accused is obscured.
 In the gif below the dashboard is shown and later on how to use it on colab is explained
 
 
@@ -47,7 +47,7 @@ ngrok.connect(8050)
 
 !python3 app.py
 ```
-After running this code on colab click on the NgrokTunnel and the dashboard will open where you can enter the sentence taken from the following link: http://www.italgiure.giustizia.it/sncass/.
-The pdf of the sentence will be downloaded with the relative anonymization as in the image below:
+After running this code on colab click on the NgrokTunnel and the dashboard will open where you can enter the judgement link taken from the following link: http://www.italgiure.giustizia.it/sncass/.
+The pdf of the judgement will be downloaded with the relative anonymization as in the image below:
 
 <img src="https://github.com/Gianpe/NLP_Anonymization/blob/main/images/anon_sent.PNG" width="600" height="338"/>
