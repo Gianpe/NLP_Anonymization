@@ -88,4 +88,5 @@ durata di 86 giorni, in sostituzione della pena di 80 giorni di arresto e di
 1.500,00 euro di ammenda'''
 
 doc = nlp_rel(nlp_it(text))
+print(doc._.rel)
 ```
