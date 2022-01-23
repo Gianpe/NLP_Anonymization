@@ -1,0 +1,3 @@
+[spacy_models]
+en_relation_def_extraction = en_relation_def_extraction
+

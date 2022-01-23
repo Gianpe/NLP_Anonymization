@@ -1,0 +1,5 @@
+spacy<3.3.0,>=3.2.1
+spacy==3.2.1
+spacy-nightly==3.0.0rc5
+transformers==4.9.2
+spacy-transformers==1.0.4
