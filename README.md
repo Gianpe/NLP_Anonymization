@@ -1,4 +1,4 @@
-# NLP_Anonymization
+# Judgements anonymization
 
 In this project I will anonymize documents from criminal and civil judgments available free of charge online for consultation.
 NER is often used to anonymize documents. A model is trained to extract the text entities.
@@ -12,3 +12,9 @@ In the gif below the dashboard is shown and later on how to use it on colab is e
 
 
 <img src="https://github.com/Gianpe/NLP_Anonymization/blob/main/images/def_extractor2.gif" width="600" height="338"/>
+
+## Install pipeline
+```bash
+pip install https://github.com/Gianpe/NLP_Anonymization/raw/main/spacytransformers_umberto/package_tar_format/en_relation_def_extraction-0.0.1/dist/en_relation_def_extraction-0.0.1.tar.gz
+
+```
