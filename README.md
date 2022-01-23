@@ -22,15 +22,19 @@ pip install https://github.com/Gianpe/NLP_Anonymization/raw/main/spacytransforme
 
 ```bash
 
-
+# Clone the repository and go to the Step4_Visualization folder
 !git clone https://github.com/Gianpe/NLP_Anonymization.git
 %cd /content/NLP_Anonymization/notebooks/Step4_Visualization/
 
+# Install requirements
 !pip install -U spacy-nightly --pre
 !pip install -r requirements.txt
 
+# Install the pipeline
 !pip install https://github.com/Gianpe/NLP_Anonymization/raw/main/spacytransformers_umberto/package_tar_format/en_relation_def_extraction-0.0.1/dist/en_relation_def_extraction-0.0.1.tar.gz
 
+
+# Use ngrok to create a tunnel between colab server and your localhost
 #This step is necessary because the config file of a library we import is not updated and it brings to error. 
 !grep -rl "defaults = yaml.load(f)" /usr/local/lib/python3.7/dist-packages/distributed/config.py | xargs sed -i 's/defaults = yaml.load(f)/defaults = yaml.load(f, Loader=yaml.FullLoader)/g'
 
@@ -43,3 +47,7 @@ ngrok.connect(8050)
 
 !python3 app.py
 ```
+After running this code on colab click on the NgrokTunnel and the dashboard will open where you can enter the sentence taken from the following link: http://www.italgiure.giustizia.it/sncass/.
+The pdf of the sentence will be downloaded with the relative anonymization as in the image below:
+
+<img src="https://github.com/Gianpe/NLP_Anonymization/blob/main/images/anon_sent.PNG" width="600" height="338"/>
