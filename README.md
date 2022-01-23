@@ -20,31 +20,39 @@ pip install https://github.com/Gianpe/NLP_Anonymization/raw/main/spacytransforme
 ### Usage on Colab
 Open a Colab notebook and copy the following lines of code:
 (Remember to change the runtime type and choose GPU)
-```bash
 
-# Clone the repository and go to the Step4_Visualization folder
+Clone the repository and go to the Step4_Visualization folder
+```bash
 !git clone https://github.com/Gianpe/NLP_Anonymization.git
 %cd /content/NLP_Anonymization/notebooks/Step4_Visualization/
+```
 
-# Install requirements
+Install requirements
+```bash
 !pip install -U spacy-nightly --pre
 !pip install -r requirements.txt
+```
 
-# Install the pipeline
+Install the pipeline
+```bash
 !pip install https://github.com/Gianpe/NLP_Anonymization/raw/main/spacytransformers_umberto/package_tar_format/en_relation_def_extraction-0.0.1/dist/en_relation_def_extraction-0.0.1.tar.gz
+```
 
-
-# Use ngrok to create a tunnel between colab server and your localhost
+Use ngrok to create a tunnel between colab server and your localhost
+```bash
 #This step is necessary because the config file of a library we import is not updated and it brings to error. 
 !grep -rl "defaults = yaml.load(f)" /usr/local/lib/python3.7/dist-packages/distributed/config.py | xargs sed -i 's/defaults = yaml.load(f)/defaults = yaml.load(f, Loader=yaml.FullLoader)/g'
 
 !ngrok authtoken 23V4xyZKlY7Ql88g1RHrO5GGLOS_38SQ8R5uG6v5JUzDrkzBT
-
+```
+Create the tunnel
+```bash
 from pyngrok import ngrok
-
 #To run dash in colab it is necessary to create a tunnel. The first link will be the one to use to see the dashboards
 ngrok.connect(8050)
-
+```
+Run the the dashboard
+```bash
 !python3 app.py
 ```
 After running this code on colab click on the NgrokTunnel and the dashboard will open where you can enter the judgement link taken from the following link: http://www.italgiure.giustizia.it/sncass/.
