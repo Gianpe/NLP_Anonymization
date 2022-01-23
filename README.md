@@ -74,7 +74,7 @@ Install 2 pipelines
 pip install https://github.com/Gianpe/NLP_Anonymization/raw/main/spacytransformers_umberto/package_tar_format/en_relation_def_extraction-0.0.1/dist/en_relation_def_extraction-0.0.1.tar.gz
 python -m spacy download it_core_news_lg
 ```
-Impot pipelines
+Import pipelines
 ```bash
 import spacy
 
