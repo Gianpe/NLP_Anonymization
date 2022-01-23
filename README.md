@@ -17,7 +17,7 @@ In the gif below the dashboard is shown and later on how to use it on colab is e
 pip install https://github.com/Gianpe/NLP_Anonymization/raw/main/spacytransformers_umberto/package_tar_format/en_relation_def_extraction-0.0.1/dist/en_relation_def_extraction-0.0.1.tar.gz
 
 ```
-### Usage on Colab
+### Usage on Colab to use dashboard
 Open a Colab notebook and copy the following lines of code:
 (Remember to change the runtime type and choose GPU)
 
@@ -59,3 +59,33 @@ After running this code on colab click on the NgrokTunnel and the dashboard will
 The pdf of the judgement will be downloaded with the relative anonymization as in the image below:
 
 <img src="https://github.com/Gianpe/NLP_Anonymization/blob/main/images/anon_sent.PNG" width="600" height="338"/>
+
+
+## Usage pipeline
+Libraries needed
+```bash
+pip install -U spacy-nightly --pre
+pip install spacy==3.2.1
+pip install transformers==4.15.0
+pip install spacy_transformers==1.1.4
+```
+Install 2 pipelines
+```bash
+pip install https://github.com/Gianpe/NLP_Anonymization/raw/main/spacytransformers_umberto/package_tar_format/en_relation_def_extraction-0.0.1/dist/en_relation_def_extraction-0.0.1.tar.gz
+python -m spacy download it_core_news_lg
+```
+Impot pipelines
+```bash
+import spacy
+
+nlp_rel = spacy.load('en_relation_def_extraction')
+nlp_it = spacy.load('it_core_news_lg')
+
+text = ''' Con ordinanza in data 17/12/2020 il Giudice per le indagini preliminari del
+Tribunale di Monza ha disposto, nei confronti di Vasquez Bueno Raul Osbaldo, la
+revoca della sanzione sostitutiva dei lavori di pubblica utilità applicata, per la
+durata di 86 giorni, in sostituzione della pena di 80 giorni di arresto e di
+1.500,00 euro di ammenda'''
+
+doc = nlp_rel(nlp_it(text))
+```
