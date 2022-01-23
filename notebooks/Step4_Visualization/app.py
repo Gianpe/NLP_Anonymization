@@ -17,15 +17,13 @@ import spacy
 from spacy.tokens import DocBin, Doc
 
 #from spacy.training.example import Example
-from rel_pipe import make_relation_extractor, score_relations
-from rel_model import create_relation_model, create_classification_layer, create_instances, create_tensors
 import re
 import requests
 import PyPDF2
 import fitz
 import re
 
-nlp2 = spacy.load("./spacytransformers_umberto/training/model-best")
+nlp2 = spacy.load("en_relation_def_extraction")
 
 import spacy.cli
 
