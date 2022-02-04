@@ -23,7 +23,7 @@ import PyPDF2
 import fitz
 import re
 
-nlp2 = spacy.load("en_relation_def_extraction")
+nlp2 = spacy.load("/content/NLP_Anonymization/spacytransformers_umberto/training/model-best")
 
 import spacy.cli
 
