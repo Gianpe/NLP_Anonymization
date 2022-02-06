@@ -14,8 +14,7 @@ In the gif below the dashboard is shown and later on how to use it on colab is e
 
 ### Install pipeline
 ```bash
-pip install https://github.com/Gianpe/NLP_Anonymization/raw/main/spacytransformers_umberto/package_tar_format/en_relation_def_extraction-0.0.1/dist/en_relation_def_extraction-0.0.1.tar.gz
-
+pip install https://github.com/Gianpe/NLP_Anonymization/releases/download/v0.0.1/en_relation_def_extraction-0.0.1.tar.gz
 ```
 ### Usage on Colab to use dashboard
 Open a Colab notebook and copy the following lines of code:
@@ -35,7 +34,7 @@ Install requirements
 
 Install the pipeline
 ```bash
-!pip install https://github.com/Gianpe/NLP_Anonymization/raw/main/spacytransformers_umberto/package_tar_format/en_relation_def_extraction-0.0.1/dist/en_relation_def_extraction-0.0.1.tar.gz
+!pip install https://github.com/Gianpe/NLP_Anonymization/releases/download/v0.0.1/en_relation_def_extraction-0.0.1.tar.gz
 ```
 
 Use ngrok to create a tunnel between colab server and your localhost
@@ -71,7 +70,7 @@ pip install spacy_transformers==1.1.4
 ```
 Install 2 pipelines
 ```bash
-pip install https://github.com/Gianpe/NLP_Anonymization/raw/main/spacytransformers_umberto/package_tar_format/en_relation_def_extraction-0.0.1/dist/en_relation_def_extraction-0.0.1.tar.gz
+pip install https://github.com/Gianpe/NLP_Anonymization/releases/download/v0.0.1/en_relation_def_extraction-0.0.1.tar.gz
 python -m spacy download it_core_news_lg
 ```
 Import pipelines
@@ -82,7 +81,7 @@ nlp_rel = spacy.load('en_relation_def_extraction')
 nlp_it = spacy.load('it_core_news_lg')
 
 text = ''' Con ordinanza in data 17/12/2020 il Giudice per le indagini preliminari del
-Tribunale di Monza ha disposto, nei confronti di Vasquez Bueno Raul Osbaldo, la
+Tribunale di Monza ha disposto, nei confronti di Gianmarco Pepi, la
 revoca della sanzione sostitutiva dei lavori di pubblica utilità applicata, per la
 durata di 86 giorni, in sostituzione della pena di 80 giorni di arresto e di
 1.500,00 euro di ammenda'''
