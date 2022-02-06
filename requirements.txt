@@ -1,3 +1,4 @@
+spacy-nightly --pre
 spacy==3.2.1
 spacy-nightly==3.0.0rc5
 transformers==4.9.2
