@@ -32,11 +32,12 @@ Install the necessary libraries in the order they are in the requirements.txt fi
 ```
 
 Use ngrok to create a tunnel between colab server and your localhost
+(sign up on https://ngrok.com/ to obtain YOUR_TOKEN and replace it in the code below
 ```bash
 #This step is necessary because the config file of a library we import is not updated and it brings to error. 
 !grep -rl "defaults = yaml.load(f)" /usr/local/lib/python3.7/dist-packages/distributed/config.py | xargs sed -i 's/defaults = yaml.load(f)/defaults = yaml.load(f, Loader=yaml.FullLoader)/g'
 
-!ngrok authtoken 23V4xyZKlY7Ql88g1RHrO5GGLOS_38SQ8R5uG6v5JUzDrkzBT
+!ngrok authtoken YOUR_TOKEN
 ```
 Create the tunnel
 ```bash
