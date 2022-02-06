@@ -28,7 +28,6 @@ Clone the repository and go to the Step4_Visualization folder
 
 Install requirements
 ```bash
-!pip install -U spacy-nightly --pre
 !pip install -r requirements.txt
 ```
 
