@@ -24,13 +24,7 @@ import fitz
 import re
 
 nlp2 = spacy.load("en_relation_def_extraction")
-
-import spacy.cli
-
-spacy.cli.download('it_core_news_lg')
-
 nlp_it = spacy.load('it_core_news_lg')
-
 
 
 def clean_jud(text):
