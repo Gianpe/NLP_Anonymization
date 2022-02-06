@@ -26,14 +26,9 @@ Clone the repository and go to the Step4_Visualization folder
 %cd /content/NLP_Anonymization/notebooks/Step4_Visualization/
 ```
 
-Install requirements
+Install the necessary libraries in the order they are in the requirements.txt file
 ```bash
-!pip install -r requirements.txt
-```
-
-Install the pipeline
-```bash
-!pip install https://github.com/Gianpe/NLP_Anonymization/releases/download/v0.0.1/en_relation_def_extraction-0.0.1.tar.gz
+!cat requirements.txt | xargs -n 1 -L 1 pip install
 ```
 
 Use ngrok to create a tunnel between colab server and your localhost
