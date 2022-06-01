@@ -3,7 +3,7 @@ spacy==3.2.1
 spacy-nightly==3.0.0rc5
 transformers==4.9.2
 spacy-transformers==1.0.4
-PyPDF2==1.26.0
+PyPDF2==1.27.5
 PyMuPDF==1.19.4
 dash==2.0.0
 dash-bootstrap-components==1.0.2
